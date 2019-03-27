@@ -22,12 +22,25 @@ public class ImageController {
 	@Autowired
 	private BaseImageService baseImageService;
 	
-	@RequestMapping(value="/forumJson",produces = "text/html;charset=UTF-8")
+	@RequestMapping(value="/homepage",produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String forumJson( String Album) {
+	public String homepage( String Album) {
 		
 		return baseImageService.getCoverImageByAlbum("/image0.jpg").toString();
 		
 		
 	}
+	@RequestMapping(value="/homeblog",produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String homeblog( String u_UserName) {
+		
+		return baseImageService.getImageByUserName("独角兽").toString()+"["+"{\"u_Name\":\"" + "李宇翔" + "\"}"+"]";
+	}
+	@RequestMapping(value="/details")
+	@ResponseBody
+	public List<String> details( String u_Name,String p_Image_Url) {
+		
+		return baseImageService.getAlbumByUserName("/images/jk/1/独角兽/");
+	}
+	
 }

@@ -5,8 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import com.forum.pojo.BaseBlog;
+import com.forum.pojo.BaseDetails;
 import com.forum.pojo.BaseImage;
-
+import com.forum.pojo.User;
+/**
+ * Mapper层 用于实现 数据库一些基础的数据库方法
+ * 用于Serviceimpl  实现层调用 
+ * @author root
+ *
+ */
 @Repository
 public interface BaseImageMapper {
 	/**
@@ -16,8 +24,9 @@ public interface BaseImageMapper {
 	 * 查询 该用户下的所有图片
 	 * 		
 	 */
-//	@Select("")
-//	List <BaseImage> getImageByUserName(String u_UserName);
+	@Select("SELECT p_Describe,p_Image_Url,p_Tags,u_Name,u_Image FROM pic,user WHERE u_Name=p_Owner AND\r\n" + 
+			"u_Name=#{u_Name}")
+	List <BaseBlog> getImageByUserName(String u_UserName);
 	
 	/**
 	 * 
@@ -28,9 +37,13 @@ public interface BaseImageMapper {
 	 * 该用户下的该相册中的图片
 	 * 
 	 */
-//	@Select("")
-//	List <BaseImage> getAlbumByUserName(String u_UserName,String Album);
-	
+	@Select("SELECT p_Image_Url FROM pic WHERE p_Image_Url LIKE #{p_Image_Url}")
+	List<String> getAlbumByUserName(String p_Image_Url);
+	/**
+	 * 拿到用户的用户名 和 用户图片 用户Email 
+	 */
+	@Select("SELECT u_Name,u_Image,u_Emai FROM user WHERE u_Name=#{u_Name}")
+	List <User> getUserMessage(String u_Name);
 	/**
 	 * 
 	 * 论坛主页
